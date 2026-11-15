@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="title.send">Send Money – PearlSend</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo"><img src="images/logo.svg" alt="" class="logo-mark"><span class="name">Pearl<span class="accent">Send</span></span></a>
+      <div class="header-right">
+        <nav class="nav">
+          <a href="index.html" class="home-link" data-i18n="nav.home">Home</a>
+          <a href="send.html" class="active" data-i18n="nav.send">Send Money</a>
+        </nav>
+        <div class="lang-switch" role="group" aria-label="Language / Язык">
+          <button type="button" data-lang="en"><img src="images/flag-ug.svg" alt="" class="flag">EN</button>
+          <button type="button" data-lang="ru"><img src="images/flag-ru.svg" alt="" class="flag">RU</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="form-page">
+    <div class="container">
+      <div class="form-layout">
+
+        <aside class="form-aside">
+          <div class="aside-flags">
+            <img src="images/flag-ru.svg" alt="Russia" class="flag lg">
+            <span>⇄</span>
+            <img src="images/flag-ug.svg" alt="Uganda" class="flag lg">
+          </div>
+          <h2 id="aside-title">Send money to your loved ones in Uganda</h2>
+          <p data-i18n="aside.text">Fill in the details and we'll get back to you to confirm the transfer.</p>
+          <ul>
+            <li data-i18n="aside.li1">RUB ⇄ UGX transfers</li>
+            <li data-i18n="aside.li2">We confirm every request personally</li>
+            <li data-i18n="aside.li3">Your details are kept private</li>
+          </ul>
+          <div class="art">
+            <img src="images/form-side.svg" alt="Person receiving a money transfer on their phone">
+          </div>
+        </aside>
+
+        <section class="form-main">
+          <h1 data-i18n="form.title">Transfer request</h1>
+          <p data-i18n="form.sub">All fields are required unless marked optional.</p>
+
+          <!-- FormSubmit.co delivers submissions to this email address -->
+          <form id="transfer-form" action="https://formsubmit.co/desireasiimwe24@gmail.com" method="POST">
+            <!-- FormSubmit settings -->
+            <input type="hidden" name="_subject" id="subject" value="New transfer request: Russia → Uganda">
+            <input type="hidden" name="_template" value="box">
+            <input type="hidden" name="_captcha" value="true">
+            <input type="hidden" name="_next" id="next">
+            <!-- One-line summary shown first in the email (filled in on submit) -->
+            <input type="hidden" name="Reference" id="reference">
+            <input type="hidden" name="Summary" id="summary">
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+            <div class="toggle" role="radiogroup" aria-label="Direction">
+              <input type="radio" name="Direction" id="dir-to" value="Russia → Uganda" checked>
+              <label for="dir-to"><img src="images/flag-ru.svg" alt="" class="flag"><span data-i18n="route.to">Russia → Uganda</span><img src="images/flag-ug.svg" alt="" class="flag"></label>
+              <input type="radio" name="Direction" id="dir-from" value="Uganda → Russia">
+              <label for="dir-from"><img src="images/flag-ug.svg" alt="" class="flag"><span data-i18n="route.from">Uganda → Russia</span><img src="images/flag-ru.svg" alt="" class="flag"></label>
+            </div>
+
+            <fieldset>
+              <legend data-i18n="legend.transfer">Transfer</legend>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="amount" data-i18n="f.amount">Amount to send</label>
+                  <div class="amount-row">
+                    <input type="number" id="amount" name="Amount" min="1" step="any" data-i18n-ph="ph.amount" placeholder="e.g. 20 000" required>
+                    <select id="currency" name="Currency" aria-label="Currency">
+                      <option value="RUB">₽ RUB</option>
+                      <option value="UGX">UGX</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="payout" data-i18n="f.payout">Recipient receives via</label>
+                  <select id="payout" name="Payout method" required></select>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend id="recipient-legend">Recipient in Uganda</legend>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="r-name" data-i18n="f.fullname">Full name</label>
+                  <input type="text" id="r-name" name="Recipient name" autocomplete="off" required>
+                </div>
+                <div class="field">
+                  <label for="r-phone" data-i18n="f.phone">Phone number</label>
+                  <input type="tel" id="r-phone" name="Recipient phone" placeholder="+256 7XX XXX XXX" required>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend data-i18n="legend.sender">Your details</legend>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="s-name" data-i18n="f.yourname">Your full name</label>
+                  <input type="text" id="s-name" name="Sender name" autocomplete="name" required>
+                </div>
+                <div class="field">
+                  <label for="s-phone" data-i18n="f.yourphone">Your phone number</label>
+                  <input type="tel" id="s-phone" name="Sender phone" autocomplete="tel" placeholder="+7 9XX XXX-XX-XX" required>
+                </div>
+                <div class="field">
+                  <label for="s-email"><span data-i18n="f.email">Email</span> <span class="opt" data-i18n="opt">(optional)</span></label>
+                  <input type="email" id="s-email" name="email" autocomplete="email">
+                </div>
+                <div class="field">
+                  <label for="notes"><span data-i18n="f.notes">Message</span> <span class="opt" data-i18n="opt">(optional)</span></label>
+                  <input type="text" id="notes" name="Notes" data-i18n-ph="ph.notes" placeholder="e.g. Birthday gift">
+                </div>
+              </div>
+            </fieldset>
+
+            <label class="consent">
+              <input type="checkbox" required>
+              <span data-i18n="consent">I confirm these details are correct and agree to be contacted about this request.</span>
+            </label>
+
+            <input type="hidden" name="Site language" id="site-lang" value="English">
+            <input type="hidden" name="Submitted" id="submitted">
+
+            <button type="submit" class="btn btn-primary" id="submit-btn">
+              <span class="spinner" aria-hidden="true"></span>
+              <span id="submit-label" data-i18n="submit">Submit request</span>
+            </button>
+          </form>
+
+          <!-- Success screen, shown in place of the form after sending -->
+          <div id="success" class="success" hidden tabindex="-1">
+            <div class="success-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+            </div>
+            <h1 data-i18n="ok.title">Request sent!</h1>
+            <p id="ok-text" class="ok-text"></p>
+
+            <div class="ref-box">
+              <div>
+                <span data-i18n="ok.ref">Reference number</span>
+                <strong id="ok-ref">PS-000000-XXXX</strong>
+              </div>
+              <button type="button" id="copy-ref" class="copy-btn" data-i18n="ok.copy">Copy</button>
+            </div>
+
+            <dl class="ok-summary">
+              <div><dt data-i18n="ok.route">Route</dt><dd id="ok-route"></dd></div>
+              <div><dt data-i18n="pf.amount">Amount</dt><dd id="ok-amount"></dd></div>
+              <div><dt data-i18n="pf.recipient">Recipient</dt><dd id="ok-recipient"></dd></div>
+              <div><dt data-i18n="pf.phone">Phone</dt><dd id="ok-phone"></dd></div>
+              <div><dt data-i18n="f.payout">Recipient receives via</dt><dd id="ok-payout"></dd></div>
+            </dl>
+
+            <h3 data-i18n="ok.next">What happens next</h3>
+            <ol class="ok-next">
+              <li data-i18n="ok.n1">We check your request</li>
+              <li data-i18n="ok.n2">We call or message you to confirm</li>
+              <li data-i18n="ok.n3">The money is delivered to the recipient</li>
+            </ol>
+            <p class="ok-keep" data-i18n="ok.keep">Save your reference number in case you need to contact us.</p>
+
+            <div class="ok-actions">
+              <button type="button" id="send-another" class="btn btn-primary" data-i18n="ok.again">Send another</button>
+              <a href="index.html" class="btn btn-ghost" data-i18n="ok.home">Back to home</a>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span class="footer-brand">© <span id="year"></span> PearlSend
+        <span class="footer-flags" aria-label="Russia and Uganda"><img src="images/flag-ru.svg" alt="Russia" class="flag"><span aria-hidden="true">⇄</span><img src="images/flag-ug.svg" alt="Uganda" class="flag"></span>
+      </span>
+      <a href="index.html" data-i18n="footer.back">← Back to home</a>
+    </div>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Redirect to our own thank-you page after submit (only works when hosted online)
+    if (location.protocol.startsWith('http')) {
+      document.getElementById('next').value = new URL('thanks.html', location.href).href;
+    } else {
+      document.getElementById('next').remove();
+    }
+
+    const t = I18N.t;
+    const dirTo = document.getElementById('dir-to');
+    const dirFrom = document.getElementById('dir-from');
+    const currency = document.getElementById('currency');
+    const payout = document.getElementById('payout');
+
+    // Payout options: value is what you see in the email (English), label is translated
+    const PAYOUTS = {
+      to:   [['MTN Mobile Money', 'payout.mtn'], ['Airtel Money', 'payout.airtel']],
+      from: [['Bank card (Russia)', 'payout.card'], ['SBP (Fast Payment System)', 'payout.sbp']]
+    };
+
+    function fillPayout(dir) {
+      const prev = payout.value;
+      payout.innerHTML = '';
+      PAYOUTS[dir].forEach(([value, key]) => {
+        const o = document.createElement('option');
+        o.value = value; o.textContent = t(key);
+        payout.appendChild(o);
+      });
+      if (PAYOUTS[dir].some(([v]) => v === prev)) payout.value = prev;
+    }
+
+    let lastDir = null;
+    function applyDirection() {
+      const dir = dirTo.checked ? 'to' : 'from';
+      const toUganda = dir === 'to';
+      document.getElementById('recipient-legend').textContent = t(toUganda ? 'legend.recipient.to' : 'legend.recipient.from');
+      document.getElementById('aside-title').textContent = t(toUganda ? 'aside.to' : 'aside.from');
+      document.getElementById('subject').value = 'New transfer request: ' + (toUganda ? 'Russia → Uganda' : 'Uganda → Russia');
+      document.getElementById('r-phone').placeholder = toUganda ? '+256 7XX XXX XXX' : '+7 9XX XXX-XX-XX';
+      document.getElementById('s-phone').placeholder = toUganda ? '+7 9XX XXX-XX-XX' : '+256 7XX XXX XXX';
+      document.getElementById('site-lang').value = I18N.lang === 'ru' ? 'Russian' : 'English';
+      if (dir !== lastDir) currency.value = toUganda ? 'RUB' : 'UGX';
+      fillPayout(dir);
+      lastDir = dir;
+    }
+
+    dirTo.addEventListener('change', applyDirection);
+    dirFrom.addEventListener('change', applyDirection);
+    document.addEventListener('langchange', applyDirection);
+
+    /* ----------------------------------------------------------------
+       Google Sheet backup (optional).
+       Paste your Google Apps Script web-app URL between the quotes.
+       See google-sheet/Code.gs for the 5-minute setup.
+       ---------------------------------------------------------------- */
+    const SHEET_URL = '';
+
+    const form = document.getElementById('transfer-form');
+    const formMain = document.querySelector('.form-main');
+    const success = document.getElementById('success');
+    const submitBtn = document.getElementById('submit-btn');
+    const val = id => document.getElementById(id).value.trim();
+
+    function makeReference() {
+      const d = new Date();
+      const ymd = String(d.getFullYear()).slice(2) +
+        String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
+      const rnd = Math.random().toString(36).slice(2, 6).toUpperCase().padEnd(4, '0');
+      return 'PS-' + ymd + '-' + rnd;
+    }
+
+    // Fill in the summary fields so the email is easy to read
+    function prepareEmailFields() {
+      const amount = Number(val('amount')).toLocaleString('en-US').replace(/,/g, ' ');
+      const route = dirTo.checked ? 'Russia → Uganda' : 'Uganda → Russia';
+      const money = amount + ' ' + currency.value;
+      const ref = makeReference();
+      document.getElementById('reference').value = ref;
+      document.getElementById('subject').value =
+        '💸 ' + money + ' to ' + val('r-name') + ' (' + route + ') · ' + ref;
+      document.getElementById('summary').value =
+        val('s-name') + ' wants to send ' + money + ' to ' + val('r-name') +
+        ' (' + val('r-phone') + ') via ' + payout.value + '. Route: ' + route + '.';
+      document.getElementById('submitted').value = new Date().toLocaleString('en-GB', {
+        dateStyle: 'medium', timeStyle: 'short'
+      });
+      return { ref, money };
+    }
+
+    let lastRequest = null;
+    function renderSuccess() {
+      if (!lastRequest) return;
+      const r = lastRequest;
+      const flags = r.dir === 'to'
+        ? ['flag-ru', 'flag-ug'] : ['flag-ug', 'flag-ru'];
+      document.getElementById('ok-text').textContent = t('ok.text').replace('{name}', r.sender);
+      document.getElementById('ok-ref').textContent = r.ref;
+      document.getElementById('ok-route').innerHTML =
+        '<img src="images/' + flags[0] + '.svg" alt="" class="flag"> ' +
+        t(r.dir === 'to' ? 'route.to' : 'route.from') +
+        ' <img src="images/' + flags[1] + '.svg" alt="" class="flag">';
+      document.getElementById('ok-amount').textContent = r.money;
+      document.getElementById('ok-recipient').textContent = r.recipient;
+      document.getElementById('ok-phone').textContent = r.phone;
+      document.getElementById('ok-payout').textContent = t(r.payoutKey);
+      document.getElementById('copy-ref').textContent = t('ok.copy');
+    }
+    document.addEventListener('langchange', renderSuccess);
+
+    function showSuccess(ref, money) {
+      const dir = dirTo.checked ? 'to' : 'from';
+      lastRequest = {
+        ref, money, dir,
+        sender: val('s-name'), recipient: val('r-name'), phone: val('r-phone'),
+        payoutKey: PAYOUTS[dir].find(([v]) => v === payout.value)[1]
+      };
+      renderSuccess();
+      formMain.classList.add('done');
+      success.hidden = false;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      success.focus({ preventScroll: true });
+    }
+
+    function setSending(on) {
+      submitBtn.disabled = on;
+      submitBtn.classList.toggle('loading', on);
+      document.getElementById('submit-label').textContent = t(on ? 'sending' : 'submit');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const { ref, money } = prepareEmailFields();
+
+      // Spam bots fill the hidden "_honey" field: pretend it worked, send nothing
+      if (form.elements._honey.value) { showSuccess(ref, money); return; }
+
+      const data = Object.fromEntries(new FormData(form));
+      setSending(true);
+
+      // 1) Backup copy to Google Sheets (fire and forget)
+      if (SHEET_URL) {
+        const row = new URLSearchParams();
+        Object.entries(data).forEach(([k, v]) => { if (!k.startsWith('_')) row.append(k, v); });
+        fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', body: row }).catch(() => {});
+      }
+
+      // 2) Email via FormSubmit, in the background, so the visitor stays on our page
+      try {
+        const res = await fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const json = await res.json();
+        if (!res.ok || String(json.success) !== 'true') throw new Error(json.message || 'Failed');
+        setSending(false);
+        showSuccess(ref, money);
+      } catch (err) {
+        // Fallback: normal form post (FormSubmit's own pages + our thanks.html)
+        setSending(false);
+        HTMLFormElement.prototype.submit.call(form);
+      }
+    });
+
+    document.getElementById('copy-ref').addEventListener('click', async (e) => {
+      try { await navigator.clipboard.writeText(lastRequest.ref); } catch (err) { return; }
+      e.target.textContent = t('ok.copied');
+      setTimeout(() => { e.target.textContent = t('ok.copy'); }, 1800);
+    });
+
+    document.getElementById('send-another').addEventListener('click', () => {
+      form.reset();
+      lastDir = null;
+      applyDirection();
+      success.hidden = true;
+      formMain.classList.remove('done');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    if (new URLSearchParams(location.search).get('dir') === 'from') dirFrom.checked = true;
+    applyDirection();
+  </script>
+</body>
+</html>

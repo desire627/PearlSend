@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="title.thanks">Request Received – PearlSend</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo"><img src="images/logo.svg" alt="" class="logo-mark"><span class="name">Pearl<span class="accent">Send</span></span></a>
+      <div class="header-right">
+        <nav class="nav">
+          <a href="index.html" class="home-link" data-i18n="nav.home">Home</a>
+          <a href="send.html" data-i18n="nav.send">Send Money</a>
+        </nav>
+        <div class="lang-switch" role="group" aria-label="Language / Язык">
+          <button type="button" data-lang="en"><img src="images/flag-ug.svg" alt="" class="flag">EN</button>
+          <button type="button" data-lang="ru"><img src="images/flag-ru.svg" alt="" class="flag">RU</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="thanks">
+    <div class="container">
+      <div class="card">
+        <div class="check">✓</div>
+        <h1 data-i18n="thanks.title">Request received!</h1>
+        <p data-i18n="thanks.text">Thank you. We've received your transfer details and will contact you shortly to confirm.</p>
+        <a href="index.html" class="btn btn-primary" data-i18n="thanks.back">Back to home</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="i18n.js"></script>
+</body>
+</html>

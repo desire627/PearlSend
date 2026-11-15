@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 220" role="img" aria-labelledby="t d">
+  <title id="t">Route from Russia to Uganda</title>
+  <desc id="d">Two map pins with the flags of Russia and Uganda, joined by a dotted route with a coin travelling between them.</desc>
+  <defs>
+    <clipPath id="c"><circle r="15"/></clipPath>
+    <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#0f7b4a" opacity=".12"/>
+    </pattern>
+  </defs>
+
+  <rect width="340" height="220" rx="20" fill="#f7f8fa"/>
+  <rect width="340" height="220" rx="20" fill="url(#dots)"/>
+
+  <!-- route -->
+  <path d="M80 100 C 100 190, 220 60, 258 160" fill="none" stroke="#0f7b4a" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+
+  <!-- pin shadows -->
+  <ellipse cx="80" cy="100" rx="14" ry="4" fill="#1d2433" opacity=".12"/>
+  <ellipse cx="262" cy="170" rx="14" ry="4" fill="#1d2433" opacity=".12"/>
+
+  <!-- Russia pin -->
+  <g transform="translate(80 62)">
+    <path d="M0 36 C-10 22 -22 13 -22 0 A22 22 0 1 1 22 0 C22 13 10 22 0 36Z" fill="#0f7b4a"/>
+    <g clip-path="url(#c)">
+      <rect x="-15" y="-15" width="30" height="10" fill="#fff"/>
+      <rect x="-15" y="-5" width="30" height="10" fill="#0039a6"/>
+      <rect x="-15" y="5" width="30" height="10" fill="#d52b1e"/>
+    </g>
+    <circle r="15" fill="none" stroke="#fff" stroke-width="2.5"/>
+  </g>
+
+  <!-- Uganda pin -->
+  <g transform="translate(262 132)">
+    <path d="M0 36 C-10 22 -22 13 -22 0 A22 22 0 1 1 22 0 C22 13 10 22 0 36Z" fill="#0f7b4a"/>
+    <g clip-path="url(#c)">
+      <rect x="-15" y="-15" width="30" height="5" fill="#000"/>
+      <rect x="-15" y="-10" width="30" height="5" fill="#fcdc04"/>
+      <rect x="-15" y="-5" width="30" height="5" fill="#d90000"/>
+      <rect x="-15" y="0" width="30" height="5" fill="#000"/>
+      <rect x="-15" y="5" width="30" height="5" fill="#fcdc04"/>
+      <rect x="-15" y="10" width="30" height="5" fill="#d90000"/>
+      <circle r="5" fill="#fff"/>
+    </g>
+    <circle r="15" fill="none" stroke="#fff" stroke-width="2.5"/>
+  </g>
+
+  <!-- travelling coin -->
+  <circle cx="162" cy="126" r="24" fill="#0f7b4a" opacity=".12"/>
+  <circle cx="162" cy="126" r="16" fill="#f6c344" stroke="#e0a800" stroke-width="2.5"/>
+  <path d="M155 126 h14 m-5 -5 l5 5 l-5 5" fill="none" stroke="#8a6400" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- currency chips -->
+  <g font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="13" text-anchor="middle">
+    <rect x="112" y="40" width="44" height="24" rx="12" fill="#fff" stroke="#e3e6ec"/>
+    <text x="134" y="57" fill="#1d2433">₽</text>
+    <rect x="178" y="172" width="54" height="24" rx="12" fill="#fff" stroke="#e3e6ec"/>
+    <text x="205" y="189" fill="#1d2433">UGX</text>
+  </g>
+
+  <!-- sparkles -->
+  <path d="M290 50 v12 M284 56 h12" stroke="#f6c344" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M40 170 v8 M36 174 h8" stroke="#0f7b4a" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+</svg>

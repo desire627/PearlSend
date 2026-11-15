@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="title.home">PearlSend – Money transfers Russia ⇄ Uganda</title>
+  <meta name="description" content="Send money between Russia and Uganda. Roubles and Ugandan shillings, in both directions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo"><img src="images/logo.svg" alt="" class="logo-mark"><span class="name">Pearl<span class="accent">Send</span></span></a>
+      <div class="header-right">
+        <nav class="nav">
+          <a href="index.html" class="active home-link" data-i18n="nav.home">Home</a>
+          <a href="send.html" data-i18n="nav.send">Send Money</a>
+        </nav>
+        <div class="lang-switch" role="group" aria-label="Language / Язык">
+          <button type="button" data-lang="en"><img src="images/flag-ug.svg" alt="" class="flag">EN</button>
+          <button type="button" data-lang="ru"><img src="images/flag-ru.svg" alt="" class="flag">RU</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div>
+          <span class="eyebrow">
+            <img src="images/flag-ru.svg" alt="" class="flag">
+            <span data-i18n="hero.eyebrow">Russia ⇄ Uganda</span>
+            <img src="images/flag-ug.svg" alt="" class="flag">
+          </span>
+          <h1 data-i18n-html="hero.title">Send money between <span>Russia</span> and <span>Uganda</span>, simply.</h1>
+          <p class="lead" data-i18n="hero.lead">Tell us who you're sending to, how much, and their phone number. We'll contact you to confirm and get the money to them quickly.</p>
+          <div class="hero-actions">
+            <a href="send.html?dir=to" class="btn btn-primary" data-i18n="route.to">Russia → Uganda</a>
+            <a href="send.html?dir=from" class="btn btn-ghost" data-i18n="route.from">Uganda → Russia</a>
+          </div>
+        </div>
+        <div class="hero-art">
+          <img src="images/hero.svg" alt="Illustration of roubles sent from a phone in Russia arriving as shillings on a phone in Uganda">
+        </div>
+      </div>
+    </section>
+
+    <section class="how" id="how">
+      <div class="container how-grid">
+
+        <div class="how-intro">
+          <span class="eyebrow" data-i18n="how.eyebrow">How it works</span>
+          <h2 data-i18n="how.title">From your form to their phone in three steps</h2>
+          <p data-i18n="how.lead">No account, no app to download. Just tell us who should get the money and we take it from there.</p>
+          <div class="how-badges">
+            <span data-i18n="how.b1">✓ No sign-up</span>
+            <span data-i18n="how.b2">✓ Roubles &amp; shillings</span>
+            <span data-i18n="how.b3">✓ Both directions</span>
+          </div>
+          <a href="send.html" class="btn btn-primary" data-i18n="how.cta">Start now →</a>
+          <img src="images/how-route.svg" alt="Map pins for Russia and Uganda joined by a dotted route" class="how-art">
+        </div>
+
+        <ol class="timeline">
+          <li class="tl-step">
+            <div class="tl-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></svg>
+            </div>
+            <div class="tl-card">
+              <span class="tl-label" data-i18n="s1.label">Step 1</span>
+              <h3 data-i18n="s1.title">Fill the form</h3>
+              <p data-i18n="s1.text">Enter the amount, plus the name and phone number of the person receiving the money.</p>
+              <div class="tl-preview preview-form" aria-hidden="true">
+                <div class="pf-row"><span data-i18n="pf.amount">Amount</span><b>20 000 ₽</b></div>
+                <div class="pf-row"><span data-i18n="pf.recipient">Recipient</span><b>Sarah N. <img src="images/flag-ug.svg" alt="" class="flag"></b></div>
+                <div class="pf-row"><span data-i18n="pf.phone">Phone</span><b>+256 77• ••• •••</b></div>
+              </div>
+            </div>
+          </li>
+
+          <li class="tl-step">
+            <div class="tl-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>
+            </div>
+            <div class="tl-card">
+              <span class="tl-label" data-i18n="s2.label">Step 2</span>
+              <h3 data-i18n="s2.title">We confirm with you</h3>
+              <p data-i18n="s2.text">We review your request and contact you by phone or email to agree the details.</p>
+              <div class="tl-preview preview-chat" aria-hidden="true">
+                <div class="bubble in" data-i18n="chat.in">Hi! Confirming 20 000 ₽ to Sarah N. in Kampala 👍</div>
+                <div class="bubble out" data-i18n="chat.out">Yes, that's correct ✓</div>
+              </div>
+            </div>
+          </li>
+
+          <li class="tl-step">
+            <div class="tl-icon done" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+            </div>
+            <div class="tl-card">
+              <span class="tl-label" data-i18n="s3.label">Step 3</span>
+              <h3 data-i18n="s3.title">Money is delivered</h3>
+              <p data-i18n="s3.text">The recipient gets the money on Mobile Money in Uganda, or on a bank card in Russia.</p>
+              <div class="tl-preview preview-notify" aria-hidden="true">
+                <div class="pn-icon"><img src="images/logo.svg" alt=""></div>
+                <div>
+                  <b data-i18n="notify.title">Money received</b>
+                  <span data-i18n="notify.text">You have received UGX 900,000</span>
+                </div>
+                <time data-i18n="notify.time">now</time>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="container directions">
+        <div class="direction to">
+          <div class="route-chip"><img src="images/flag-ru.svg" alt="" class="flag"> RUB → UGX <img src="images/flag-ug.svg" alt="" class="flag"></div>
+          <h3 data-i18n="dir.to.title">Sending to Uganda?</h3>
+          <p data-i18n="dir.to.text">Support family and friends in Uganda. You pay in roubles, they receive shillings on MTN or Airtel Mobile Money.</p>
+          <a href="send.html?dir=to" class="btn" data-i18n="dir.cta">Start a transfer →</a>
+        </div>
+        <div class="direction from">
+          <div class="route-chip"><img src="images/flag-ug.svg" alt="" class="flag"> UGX → RUB <img src="images/flag-ru.svg" alt="" class="flag"></div>
+          <h3 data-i18n="dir.from.title">Sending to Russia?</h3>
+          <p data-i18n="dir.from.text">In Uganda and need to send money to Russia? Pay in shillings and the recipient gets roubles on their bank card.</p>
+          <a href="send.html?dir=from" class="btn" data-i18n="dir.cta">Start a transfer →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span class="footer-brand">© <span id="year"></span> PearlSend
+        <span class="footer-flags" aria-label="Russia and Uganda"><img src="images/flag-ru.svg" alt="Russia" class="flag"><span aria-hidden="true">⇄</span><img src="images/flag-ug.svg" alt="Uganda" class="flag"></span>
+      </span>
+      <a href="send.html" data-i18n="footer.send">Send money →</a>
+    </div>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

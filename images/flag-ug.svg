@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 6" role="img" aria-label="Flag of Uganda">
+  <rect width="9" height="1" y="0" fill="#000000"/>
+  <rect width="9" height="1" y="1" fill="#fcdc04"/>
+  <rect width="9" height="1" y="2" fill="#d90000"/>
+  <rect width="9" height="1" y="3" fill="#000000"/>
+  <rect width="9" height="1" y="4" fill="#fcdc04"/>
+  <rect width="9" height="1" y="5" fill="#d90000"/>
+  <circle cx="4.5" cy="3" r="1.45" fill="#ffffff"/>
+  <!-- simplified grey crowned crane -->
+  <path d="M4.15 2.2 q.35-.3 .6 0 l-.05 .35 q.45 .15 .55 .75 l-.3 .45 h-.55 l-.1 -.55 q-.25-.35 -.15-1z" fill="#9ca0a1"/>
+  <circle cx="4.4" cy="2.05" r=".12" fill="#fcdc04"/>
+  <path d="M4.6 3.75 v.5 M4.85 3.75 v.5" stroke="#d90000" stroke-width=".08"/>
+</svg>

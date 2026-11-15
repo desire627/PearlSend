@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 400" role="img" aria-labelledby="t d">
+  <title id="t">Money transfers between Russia and Uganda</title>
+  <desc id="d">A phone in Russia sending roubles and a phone in Uganda receiving shillings, linked by arrows in both directions.</desc>
+  <defs>
+    <symbol id="ru" viewBox="0 0 9 6">
+      <rect width="9" height="6" fill="#fff"/><rect y="2" width="9" height="2" fill="#0039a6"/><rect y="4" width="9" height="2" fill="#d52b1e"/>
+    </symbol>
+    <symbol id="ug" viewBox="0 0 9 6">
+      <rect width="9" height="1" fill="#000"/><rect y="1" width="9" height="1" fill="#fcdc04"/><rect y="2" width="9" height="1" fill="#d90000"/>
+      <rect y="3" width="9" height="1" fill="#000"/><rect y="4" width="9" height="1" fill="#fcdc04"/><rect y="5" width="9" height="1" fill="#d90000"/>
+      <circle cx="4.5" cy="3" r="1.45" fill="#fff"/>
+    </symbol>
+  </defs>
+
+  <!-- globe -->
+  <circle cx="260" cy="210" r="150" fill="#ffffff" opacity=".7"/>
+  <circle cx="260" cy="210" r="150" fill="none" stroke="#0f7b4a" stroke-opacity=".18" stroke-width="2"/>
+  <ellipse cx="260" cy="210" rx="70" ry="150" fill="none" stroke="#0f7b4a" stroke-opacity=".14" stroke-width="2"/>
+  <line x1="110" y1="210" x2="410" y2="210" stroke="#0f7b4a" stroke-opacity=".14" stroke-width="2"/>
+  <path d="M130 150 H390 M130 270 H390" stroke="#0f7b4a" stroke-opacity=".1" stroke-width="2"/>
+
+  <!-- transfer arcs -->
+  <path d="M120 170 C 200 40, 320 40, 400 170" fill="none" stroke="#0f7b4a" stroke-width="4" stroke-dasharray="10 10" stroke-linecap="round"/>
+  <polygon points="400,170 384,160 396,150" fill="#0f7b4a"/>
+  <path d="M400 260 C 320 360, 200 360, 120 260" fill="none" stroke="#f6c344" stroke-width="4" stroke-dasharray="10 10" stroke-linecap="round"/>
+  <polygon points="120,260 136,270 124,280" fill="#e0a800"/>
+
+  <!-- left phone (Russia) -->
+  <g transform="translate(40 150)">
+    <rect width="110" height="190" rx="18" fill="#1d2433"/>
+    <rect x="8" y="14" width="94" height="162" rx="10" fill="#ffffff"/>
+    <use href="#ru" x="37" y="28" width="36" height="24"/>
+    <text x="55" y="92" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="800" font-size="19" fill="#1d2433">20 000 ₽</text>
+    <rect x="18" y="122" width="74" height="34" rx="9" fill="#0f7b4a"/>
+    <path d="M44 139 h22 m-7 -7 l7 7 l-7 7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- right phone (Uganda) -->
+  <g transform="translate(370 150)">
+    <rect width="110" height="190" rx="18" fill="#1d2433"/>
+    <rect x="8" y="14" width="94" height="162" rx="10" fill="#ffffff"/>
+    <use href="#ug" x="37" y="28" width="36" height="24"/>
+    <text x="55" y="92" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="800" font-size="14" fill="#0f7b4a">UGX 900,000</text>
+    <circle cx="55" cy="139" r="20" fill="#e8f4ee"/>
+    <path d="M45 139 l7 7 l13 -14" fill="none" stroke="#0f7b4a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- coins -->
+  <g font-family="Segoe UI, Arial, sans-serif" font-weight="800" text-anchor="middle">
+    <circle cx="260" cy="72" r="24" fill="#f6c344" stroke="#e0a800" stroke-width="3"/>
+    <text x="260" y="80" font-size="22" fill="#8a6400">₽</text>
+    <circle cx="260" cy="340" r="24" fill="#0f7b4a" stroke="#0a5c37" stroke-width="3"/>
+    <text x="260" y="347" font-size="13" fill="#fff">UGX</text>
+  </g>
+
+  <!-- flags under phones -->
+  <use href="#ru" x="77" y="356" width="36" height="24"/>
+  <use href="#ug" x="407" y="356" width="36" height="24"/>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" role="img" aria-labelledby="t d">
+  <title id="t">Family receiving money on mobile</title>
+  <desc id="d">A person in Uganda holding a phone that shows a mobile money payment received, with a sender's envelope arriving.</desc>
+  <!-- ground -->
+  <ellipse cx="160" cy="222" rx="130" ry="12" fill="#ffffff" opacity=".12"/>
+  <!-- person -->
+  <circle cx="120" cy="70" r="28" fill="#8d5a3b"/>
+  <path d="M92 64 q28 -36 56 0 q-6 -30 -28 -30 q-22 0 -28 30z" fill="#1d2433"/>
+  <path d="M70 220 q0 -100 50 -110 q50 10 50 110z" fill="#f6c344"/>
+  <path d="M120 110 l-8 26 l8 8 l8 -8z" fill="#fff" opacity=".6"/>
+  <!-- arm holding phone -->
+  <path d="M160 150 q30 -6 40 -34" stroke="#8d5a3b" stroke-width="16" fill="none" stroke-linecap="round"/>
+  <!-- phone -->
+  <g transform="translate(186 50) rotate(10)">
+    <rect width="64" height="110" rx="12" fill="#1d2433"/>
+    <rect x="6" y="10" width="52" height="90" rx="6" fill="#fff"/>
+    <circle cx="32" cy="40" r="13" fill="#e8f4ee"/>
+    <path d="M25 40 l5 5 l9 -10" fill="none" stroke="#0f7b4a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="13" y="62" width="38" height="7" rx="3" fill="#0f7b4a"/>
+    <rect x="17" y="75" width="30" height="5" rx="2.5" fill="#e3e6ec"/>
+  </g>
+  <!-- envelope arriving -->
+  <g transform="translate(236 6)">
+    <rect width="60" height="40" rx="6" fill="#fff"/>
+    <path d="M0 4 l30 20 l30 -20" fill="none" stroke="#0f7b4a" stroke-width="3"/>
+    <circle cx="56" cy="4" r="10" fill="#d64541"/>
+    <text x="56" y="9" text-anchor="middle" font-family="Segoe UI, sans-serif" font-weight="800" font-size="12" fill="#fff">1</text>
+  </g>
+  <path d="M232 40 q-20 10 -16 30" stroke="#fff" stroke-width="2.5" stroke-dasharray="5 6" fill="none" opacity=".7"/>
+</svg>

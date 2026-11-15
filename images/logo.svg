@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="PearlSend logo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14a063"/>
+      <stop offset="1" stop-color="#0a5c37"/>
+    </linearGradient>
+    <radialGradient id="pearl" cx="0.38" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.55" stop-color="#f4f1ea"/>
+      <stop offset="1" stop-color="#d9d2c3"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+
+  <!-- arrow going over the top: money going TO Uganda -->
+  <path d="M15.1 25.8 A18 18 0 0 1 47.6 23" fill="none" stroke="#f6c344" stroke-width="4.5" stroke-linecap="round"/>
+  <polygon points="50.1,27.3 51.5,20.75 43.7,25.25" fill="#f6c344" stroke="#f6c344" stroke-width="1.5" stroke-linejoin="round"/>
+
+  <!-- arrow going under the bottom: money coming FROM Uganda -->
+  <path d="M48.9 38.2 A18 18 0 0 1 16.4 41" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
+  <polygon points="13.9,36.7 12.5,43.25 20.3,38.75" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+
+  <!-- the pearl -->
+  <circle cx="32" cy="32" r="10.5" fill="url(#pearl)"/>
+  <circle cx="28.3" cy="28.2" r="3" fill="#ffffff" opacity=".95"/>
+  <!-- Uganda red accent -->
+  <circle cx="36.2" cy="36.4" r="1.6" fill="#d90000" opacity=".85"/>
+</svg>
