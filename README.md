@@ -12,7 +12,8 @@ Visitors fill in a short form (amount, recipient name and phone, payout method, 
 | `send.html` | Transfer request form + success screen |
 | `thanks.html` | Fallback thank-you page |
 | `i18n.js` | English / Russian translations |
-| `rates.js` | Exchange rates, converter maths and **your fee / margin settings** |
+| `rates.js` | **Your exchange rate, fee and transfer limits** |
+| `accounts.js` | **Accounts customers pay into** (shown after the form is sent) |
 | `styles.css` | All styles |
 | `images/` | Logo, flags and illustrations |
 | `google-sheet/Code.gs` | Optional Google Sheets backup (setup steps inside) |

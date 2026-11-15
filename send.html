@@ -14,7 +14,7 @@
 
   <header class="site-header">
     <div class="container">
-      <a href="index.html" class="logo"><img src="images/logo.svg" alt="" class="logo-mark"><span class="name">MefraPay</span></a>
+      <a href="index.html" class="logo"><img src="images/logo.svg" alt="" class="logo-mark"><span class="name">Mefra<span class="accent">Pay</span></span></a>
       <div class="header-right">
         <nav class="nav">
           <a href="index.html" class="home-link" data-i18n="nav.home">Home</a>
@@ -79,7 +79,7 @@
                 <div class="field">
                   <label for="amount" data-i18n="f.amount">Amount to send</label>
                   <div class="amount-row">
-                    <input type="number" id="amount" name="Amount" min="1" step="any" data-i18n-ph="ph.amount" placeholder="e.g. 20 000" required>
+                    <input type="number" id="amount" name="Amount" min="1" step="any" data-i18n-ph="ph.amount" placeholder="e.g. 10 000" required>
                     <select id="currency" name="Currency" aria-label="Currency">
                       <option value="RUB">₽ RUB</option>
                       <option value="UGX">UGX</option>
@@ -96,6 +96,7 @@
                 <strong id="est-value"></strong>
                 <small id="est-rate"></small>
               </div>
+              <p class="limit-msg" id="limit-msg" aria-live="polite"></p>
               <input type="hidden" name="Estimated recipient amount" id="est-field">
               <input type="hidden" name="Exchange rate used" id="rate-field">
             </fieldset>
@@ -161,10 +162,28 @@
             <div class="ref-box">
               <div>
                 <span data-i18n="ok.ref">Reference number</span>
-                <strong id="ok-ref">PS-000000-XXXX</strong>
+                <strong id="ok-ref">MP-000000-XXXX</strong>
               </div>
               <button type="button" id="copy-ref" class="copy-btn" data-i18n="ok.copy">Copy</button>
             </div>
+
+            <!-- Where to pay: filled from accounts.js -->
+            <div class="pay-box" id="pay-box" hidden>
+              <div class="pay-head">
+                <h3 data-i18n="pay.title">Pay to this account</h3>
+                <div class="pay-amount">
+                  <span data-i18n="pay.amount">Amount to pay</span>
+                  <strong id="pay-amount"></strong>
+                </div>
+              </div>
+              <div class="pay-accounts" id="pay-accounts"></div>
+              <p class="pay-comment" id="pay-comment"></p>
+              <div class="pay-receipt">
+                <span data-i18n="pay.receipt">After paying, send us the receipt and your reference number:</span>
+                <div class="pay-contacts" id="pay-contacts"></div>
+              </div>
+            </div>
+            <p class="pay-pending" id="pay-pending" hidden data-i18n="pay.pending">We'll send you the payment details when we contact you.</p>
 
             <dl class="ok-summary">
               <div><dt data-i18n="ok.route">Route</dt><dd id="ok-route"></dd></div>
@@ -177,9 +196,9 @@
 
             <h3 data-i18n="ok.next">What happens next</h3>
             <ol class="ok-next">
-              <li data-i18n="ok.n1">We check your request</li>
-              <li data-i18n="ok.n2">We call or message you to confirm</li>
-              <li data-i18n="ok.n3">The money is delivered to the recipient</li>
+              <li id="ok-s1"></li>
+              <li id="ok-s2"></li>
+              <li id="ok-s3"></li>
             </ol>
             <p class="ok-keep" data-i18n="ok.keep">Save your reference number in case you need to contact us.</p>
 
@@ -195,16 +214,45 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <span class="footer-brand">© <span id="year"></span> MefraPay
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="footer-logo"><img src="images/logo.svg" alt="" class="logo-mark"><span>Mefra<span class="accent">Pay</span></span></a>
+        <p data-i18n="footer.tagline">Fast, personal money transfers between Russia and Uganda.</p>
         <span class="footer-flags" aria-label="Russia and Uganda"><img src="images/flag-ru.svg" alt="Russia" class="flag"><span aria-hidden="true">⇄</span><img src="images/flag-ug.svg" alt="Uganda" class="flag"></span>
-      </span>
-      <a href="index.html" data-i18n="footer.back">← Back to home</a>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer.contact">Contact us</h4>
+        <ul class="contact-list">
+          <li>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            <a href="mailto:mefrapayadmin@gmail.com">mefrapayadmin@gmail.com</a>
+          </li>
+          <li><img src="images/flag-ru.svg" alt="Russia" class="flag"><a href="tel:+79776030222">+7 977 603-02-22</a></li>
+          <li><img src="images/flag-ru.svg" alt="Russia" class="flag"><a href="tel:+79337244301">+7 933 724-43-01</a></li>
+          <li><img src="images/flag-ug.svg" alt="Uganda" class="flag"><a href="tel:+256782492032">+256 782 492 032</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer.telegram">Telegram channel</h4>
+        <p data-i18n="footer.join">Join our channel for rates, news and updates.</p>
+        <a class="tg-btn" href="https://t.me/Mefrapay" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 4.1 2.9 11.3c-.9.4-.9 1.6 0 1.9l4.6 1.5 1.8 5.5c.2.7 1.1.9 1.6.4l2.6-2.4 4.8 3.5c.6.5 1.5.1 1.7-.6l3-15.4c.2-.9-.7-1.6-1.4-1.6Z" fill="currentColor"/><path d="M9.5 14.5 18 7.5" stroke="#229ED9" stroke-width="1.6" stroke-linecap="round"/></svg>
+          @Mefrapay
+        </a>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>© <span id="year"></span> MefraPay. <span data-i18n="footer.rights">All rights reserved.</span></span>
+      <a href="send.html" data-i18n="footer.send">Send money →</a>
     </div>
   </footer>
 
   <script src="i18n.js"></script>
   <script src="rates.js"></script>
+  <script src="accounts.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -275,6 +323,7 @@
       const p = estimateParts();
       const estField = document.getElementById('est-field');
       const rateField = document.getElementById('rate-field');
+      checkLimit(p);
       if (!p) { box.hidden = true; estField.value = ''; return; }
 
       // Shown to the visitor (in their language)
@@ -292,6 +341,20 @@
       rateField.value = '1 RUB = ' + Rates.rate('RUB', 'UGX').toFixed(2) + ' UGX' +
         (fee ? ', fee ' + fee + '%' : '') +
         (Rates.info.manual ? ' (your fixed rate)' : Rates.info.live ? ' (live rate)' : ' (fallback rate – check!)');
+    }
+
+    // ---------- Transfer limit (set in rates.js → MAX_SEND) ----------
+    function checkLimit(p) {
+      const sendCur = dirTo.checked ? 'RUB' : 'UGX';
+      const max = Rates.maxFor(sendCur);
+      const msg = document.getElementById('limit-msg');
+      const amountInput = document.getElementById('amount');
+      const maxText = Rates.format(max, sendCur);
+      const over = p && p.pay > max + 0.005;
+      msg.textContent = t(over ? 'limit.over' : 'limit.max').replace('{max}', maxText);
+      msg.classList.toggle('over', !!over);
+      amountInput.setCustomValidity(over ? msg.textContent : '');
+      amountInput.setAttribute('aria-invalid', over ? 'true' : 'false');
     }
 
     document.getElementById('amount').addEventListener('input', updateEstimate);
@@ -320,7 +383,7 @@
       const ymd = String(d.getFullYear()).slice(2) +
         String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
       const rnd = Math.random().toString(36).slice(2, 6).toUpperCase().padEnd(4, '0');
-      return 'PS-' + ymd + '-' + rnd;
+      return 'MP-' + ymd + '-' + rnd;
     }
 
     // Fill in the summary fields so the email is easy to read
@@ -349,7 +412,18 @@
       const r = lastRequest;
       const flags = r.dir === 'to'
         ? ['flag-ru', 'flag-ug'] : ['flag-ug', 'flag-ru'];
-      document.getElementById('ok-text').textContent = t('ok.text').replace('{name}', r.sender);
+      // Where to pay (accounts.js). Accounts without a number are ignored.
+      const accounts = ((typeof PAYMENT_ACCOUNTS !== 'undefined' ? PAYMENT_ACCOUNTS : {})[r.dir] || []).filter(a => String(a.number || '').trim());
+      const hasAccounts = accounts.length > 0;
+      document.getElementById('pay-box').hidden = !hasAccounts;
+      document.getElementById('pay-pending').hidden = hasAccounts;
+      if (hasAccounts) renderPayment(r, accounts);
+      ['1', '2', '3'].forEach(n => {
+        document.getElementById('ok-s' + n).textContent = t((hasAccounts ? 'ok.n' : 'ok.w') + n);
+      });
+
+      document.getElementById('ok-text').textContent =
+        t(hasAccounts ? 'ok.text' : 'ok.textPending').replace('{name}', r.sender);
       document.getElementById('ok-ref').textContent = r.ref;
       document.getElementById('ok-route').innerHTML =
         '<img src="images/' + flags[0] + '.svg" alt="" class="flag"> ' +
@@ -364,6 +438,69 @@
       document.getElementById('copy-ref').textContent = t('ok.copy');
     }
     document.addEventListener('langchange', renderSuccess);
+
+    // Known payment method names get translated; anything else is shown as written
+    const METHOD_KEYS = {
+      'SBP (Fast Payment System)': 'payout.sbp', 'Bank card': 'payout.card',
+      'MTN Mobile Money': 'payout.mtn', 'Airtel Money': 'payout.airtel'
+    };
+    // Who to send the receipt to, per direction
+    const RECEIPT_CONTACTS = {
+      to:   [['tel:+79776030222', '+7 977 603-02-22'], ['tel:+79337244301', '+7 933 724-43-01']],
+      from: [['tel:+256782492032', '+256 782 492 032']]
+    };
+
+    function el(tag, cls, text) {
+      const e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text != null) e.textContent = text;
+      return e;
+    }
+
+    function renderPayment(r, accounts) {
+      const p = r.est;
+      document.getElementById('pay-amount').textContent = p ? Rates.format(p.pay, p.sendCur) : r.money;
+
+      const list = document.getElementById('pay-accounts');
+      list.innerHTML = '';
+      accounts.forEach(a => {
+        const card = el('div', 'pay-acct');
+        const head = el('div', 'pa-head');
+        head.appendChild(el('b', '', METHOD_KEYS[a.method] ? t(METHOD_KEYS[a.method]) : a.method));
+        if (a.bank) head.appendChild(el('small', '', a.bank));
+        card.appendChild(head);
+
+        const numRow = el('div', 'pa-number');
+        numRow.appendChild(el('span', '', a.number));
+        const copy = el('button', 'copy-btn', t('ok.copy'));
+        copy.type = 'button';
+        copy.dataset.copy = a.number.replace(/\s/g, '');
+        numRow.appendChild(copy);
+        card.appendChild(numRow);
+
+        if (a.name) card.appendChild(el('div', 'pa-name', t('pay.holder') + ': ' + a.name));
+        list.appendChild(card);
+      });
+
+      document.getElementById('pay-comment').textContent = t('pay.comment').replace('{ref}', r.ref);
+
+      const contacts = document.getElementById('pay-contacts');
+      contacts.innerHTML = '';
+      [['mailto:mefrapayadmin@gmail.com', 'mefrapayadmin@gmail.com'], ...RECEIPT_CONTACTS[r.dir]].forEach(([href, label]) => {
+        const link = el('a', '', label);
+        link.href = href;
+        contacts.appendChild(link);
+      });
+    }
+
+    // Copy buttons for account numbers
+    document.getElementById('pay-accounts').addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-copy]');
+      if (!btn) return;
+      try { await navigator.clipboard.writeText(btn.dataset.copy); } catch (err) { return; }
+      btn.textContent = t('ok.copied');
+      setTimeout(() => { btn.textContent = t('ok.copy'); }, 1800);
+    });
 
     function showSuccess(ref, money) {
       const dir = dirTo.checked ? 'to' : 'from';

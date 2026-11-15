@@ -1,114 +1,49 @@
 /* =====================================================================
-   MefraPay – exchange rates and conversion (RUB ⇄ UGX)
+   MefraPay – exchange rate, limits and conversion (RUB ⇄ UGX)
    ---------------------------------------------------------------------
-   YOUR SETTINGS – change these numbers to match your business:
+   YOUR SETTINGS – change these numbers whenever your rate changes:
    ===================================================================== */
 const RATE_CONFIG = {
-  // Your fee, as a percent of the amount sent (0 = no fee shown).
+  // Our rate: how many UGX the customer gets for 1 RUB (Russia → Uganda).
+  RUB_TO_UGX: 45,
+
+  // Our rate the other way: how many UGX the customer pays for 1 RUB
+  // (Uganda → Russia). Leave as null to use the same rate as above.
+  UGX_PER_RUB_REVERSE: null,
+
+  // The date you last changed the rates (shown as "Updated …" on the site).
+  RATE_UPDATED: '2026-11-15',
+
+  // Your fee, as a percent of the amount sent (0 = no fee).
   FEE_PERCENT: 0,
 
-  // Your margin on the exchange rate, in percent. 1.5 means customers get
-  // a rate 1.5% worse than the market rate (this is your profit). 0 = market rate.
-  MARGIN_PERCENT: 0,
-
-  // Set your OWN fixed rate here (how many UGX for 1 RUB) to ignore the live
-  // market rate completely, e.g. 44.5. Leave as null to use the live rate.
-  MANUAL_RUB_TO_UGX: null,
-
-  // Used only if the live rate can't be loaded (no internet, service down).
-  FALLBACK_RUB_TO_UGX: 50
+  // Maximum a customer can send in one transfer, in the currency they pay with.
+  MAX_SEND: { RUB: 10000, UGX: 500000 }
 };
 /* ===================================================================== */
 
 (function () {
-  const CACHE_KEY = 'pearlsend-rate';
-  const CACHE_HOURS = 6;
+  const C = RATE_CONFIG;
 
-  // Free, no-key rate sources. Tried in order.
-  const SOURCES = [
-    async (signal) => {
-      const r = await fetch('https://open.er-api.com/v6/latest/RUB', { signal });
-      const j = await r.json();
-      if (j.result !== 'success' || !j.rates || !j.rates.UGX) throw new Error('bad data');
-      return { rate: j.rates.UGX, updated: new Date(j.time_last_update_unix * 1000) };
-    },
-    async (signal) => {
-      const r = await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/rub.json', { signal });
-      const j = await r.json();
-      if (!j.rub || !j.rub.ugx) throw new Error('bad data');
-      return { rate: j.rub.ugx, updated: new Date(j.date) };
-    }
-  ];
-
-  function readCache() {
-    try {
-      const c = JSON.parse(localStorage.getItem(CACHE_KEY));
-      if (c && Date.now() - c.fetched < CACHE_HOURS * 3600e3) {
-        return { rate: c.rate, updated: new Date(c.updated), live: true };
-      }
-    } catch (e) {}
-    return null;
-  }
-
-  function writeCache(d) {
-    try {
-      localStorage.setItem(CACHE_KEY, JSON.stringify({ rate: d.rate, updated: d.updated.getTime(), fetched: Date.now() }));
-    } catch (e) {}
-  }
-
-  async function loadRate() {
-    if (RATE_CONFIG.MANUAL_RUB_TO_UGX) {
-      return { rate: RATE_CONFIG.MANUAL_RUB_TO_UGX, updated: new Date(), live: true, manual: true };
-    }
-    const cached = readCache();
-    if (cached) return cached;
-    for (const src of SOURCES) {
-      const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), 6000);
-      try {
-        const d = await src(ctrl.signal);
-        clearTimeout(timer);
-        writeCache(d);
-        return { ...d, live: true };
-      } catch (e) { clearTimeout(timer); }
-    }
-    return { rate: RATE_CONFIG.FALLBACK_RUB_TO_UGX, updated: null, live: false };
-  }
-
-  let midRate = RATE_CONFIG.MANUAL_RUB_TO_UGX || RATE_CONFIG.FALLBACK_RUB_TO_UGX;
-  let info = { live: false, updated: null, manual: !!RATE_CONFIG.MANUAL_RUB_TO_UGX };
-
-  const ready = loadRate().then(d => {
-    midRate = d.rate;
-    info = { live: d.live, updated: d.updated, manual: !!d.manual };
-    document.dispatchEvent(new CustomEvent('ratesready'));
-    return d;
-  });
-
-  // Customer rate from one currency to the other (includes your margin)
+  // Customer rate from one currency to the other
   function rate(from, to) {
     if (from === to) return 1;
-    const mid = from === 'RUB' ? midRate : 1 / midRate;
-    return mid * (1 - RATE_CONFIG.MARGIN_PERCENT / 100);
+    if (from === 'RUB') return C.RUB_TO_UGX;
+    return 1 / (C.UGX_PER_RUB_REVERSE || C.RUB_TO_UGX);
   }
 
-  const feeFactor = () => 1 - RATE_CONFIG.FEE_PERCENT / 100;
+  const feeFactor = () => 1 - C.FEE_PERCENT / 100;
 
   // Amount the recipient gets when the sender pays `amount` in `from`
-  function receiveFor(amount, from, to) {
-    return amount * feeFactor() * rate(from, to);
-  }
+  function receiveFor(amount, from, to) { return amount * feeFactor() * rate(from, to); }
   // Amount the sender pays (in `from`) so the recipient gets `amount` in `to`
-  function sendFor(amount, from, to) {
-    return amount / rate(from, to) / feeFactor();
-  }
-  function feeFor(amount) {
-    return amount * RATE_CONFIG.FEE_PERCENT / 100;
-  }
+  function sendFor(amount, from, to) { return amount / rate(from, to) / feeFactor(); }
+  function feeFor(amount) { return amount * C.FEE_PERCENT / 100; }
 
-  function locale() {
-    return window.I18N && I18N.lang === 'ru' ? 'ru-RU' : 'en-US';
-  }
+  // Transfer limit for the currency the customer pays with
+  function maxFor(cur) { return C.MAX_SEND[cur] || Infinity; }
+
+  function locale() { return window.I18N && I18N.lang === 'ru' ? 'ru-RU' : 'en-US'; }
 
   function format(n, cur) {
     if (!isFinite(n)) return '–';
@@ -124,18 +59,18 @@ const RATE_CONFIG = {
     return isFinite(n) ? n : 0;
   }
 
-  // "1 RUB = 45.12 UGX" or "1 000 UGX = 22.16 RUB"
+  // "1 RUB = 45 UGX" (both directions are shown per rouble)
   function rateText(from, to) {
-    if (from === 'RUB') {
-      return '1 RUB = ' + rate('RUB', 'UGX').toLocaleString(locale(), { maximumFractionDigits: 2 }) + ' UGX';
-    }
-    return (1000).toLocaleString(locale()) + ' UGX = ' +
-      (1000 * rate('UGX', 'RUB')).toLocaleString(locale(), { maximumFractionDigits: 2 }) + ' RUB';
+    const ugxPerRub = from === 'RUB' ? rate('RUB', 'UGX') : 1 / rate('UGX', 'RUB');
+    return '1 RUB = ' + ugxPerRub.toLocaleString(locale(), { maximumFractionDigits: 2 }) + ' UGX';
   }
 
+  const updated = C.RATE_UPDATED ? new Date(C.RATE_UPDATED + 'T12:00:00') : null;
+
   window.Rates = {
-    ready, rate, receiveFor, sendFor, feeFor, format, parse, rateText,
-    get info() { return info; },
-    config: RATE_CONFIG
+    ready: Promise.resolve(),
+    rate, receiveFor, sendFor, feeFor, maxFor, format, parse, rateText,
+    info: { live: true, manual: true, updated },
+    config: C
   };
 })();

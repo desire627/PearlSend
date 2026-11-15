@@ -13,7 +13,7 @@
 <body>
   <header class="site-header">
     <div class="container">
-      <a href="index.html" class="logo"><img src="images/logo.svg" alt="" class="logo-mark"><span class="name">MefraPay</span></a>
+      <a href="index.html" class="logo"><img src="images/logo.svg" alt="" class="logo-mark"><span class="name">Mefra<span class="accent">Pay</span></span></a>
       <div class="header-right">
         <nav class="nav">
           <a href="index.html" class="home-link" data-i18n="nav.home">Home</a>
@@ -38,6 +38,44 @@
     </div>
   </main>
 
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="footer-logo"><img src="images/logo.svg" alt="" class="logo-mark"><span>Mefra<span class="accent">Pay</span></span></a>
+        <p data-i18n="footer.tagline">Fast, personal money transfers between Russia and Uganda.</p>
+        <span class="footer-flags" aria-label="Russia and Uganda"><img src="images/flag-ru.svg" alt="Russia" class="flag"><span aria-hidden="true">⇄</span><img src="images/flag-ug.svg" alt="Uganda" class="flag"></span>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer.contact">Contact us</h4>
+        <ul class="contact-list">
+          <li>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            <a href="mailto:mefrapayadmin@gmail.com">mefrapayadmin@gmail.com</a>
+          </li>
+          <li><img src="images/flag-ru.svg" alt="Russia" class="flag"><a href="tel:+79776030222">+7 977 603-02-22</a></li>
+          <li><img src="images/flag-ru.svg" alt="Russia" class="flag"><a href="tel:+79337244301">+7 933 724-43-01</a></li>
+          <li><img src="images/flag-ug.svg" alt="Uganda" class="flag"><a href="tel:+256782492032">+256 782 492 032</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer.telegram">Telegram channel</h4>
+        <p data-i18n="footer.join">Join our channel for rates, news and updates.</p>
+        <a class="tg-btn" href="https://t.me/Mefrapay" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 4.1 2.9 11.3c-.9.4-.9 1.6 0 1.9l4.6 1.5 1.8 5.5c.2.7 1.1.9 1.6.4l2.6-2.4 4.8 3.5c.6.5 1.5.1 1.7-.6l3-15.4c.2-.9-.7-1.6-1.4-1.6Z" fill="currentColor"/><path d="M9.5 14.5 18 7.5" stroke="#229ED9" stroke-width="1.6" stroke-linecap="round"/></svg>
+          @Mefrapay
+        </a>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>© <span id="year"></span> MefraPay. <span data-i18n="footer.rights">All rights reserved.</span></span>
+      <a href="send.html" data-i18n="footer.send">Send money →</a>
+    </div>
+  </footer>
+
   <script src="i18n.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
