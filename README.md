@@ -1,4 +1,4 @@
-# PearlSend
+# MefraPay
 
 A simple bilingual (English / Russian) website for requesting money transfers between **Russia 🇷🇺 and Uganda 🇺🇬** (RUB ⇄ UGX).
 

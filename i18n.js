@@ -7,9 +7,9 @@
 (function () {
   const STRINGS = {
     en: {
-      'title.home': 'PearlSend – Money transfers Russia ⇄ Uganda',
-      'title.send': 'Send Money – PearlSend',
-      'title.thanks': 'Request Received – PearlSend',
+      'title.home': 'MefraPay – Money transfers Russia ⇄ Uganda',
+      'title.send': 'Send Money – MefraPay',
+      'title.thanks': 'Request Received – MefraPay',
 
       'nav.home': 'Home',
       'nav.send': 'Send Money',
@@ -128,9 +128,9 @@
     },
 
     ru: {
-      'title.home': 'PearlSend – Денежные переводы Россия ⇄ Уганда',
-      'title.send': 'Отправить деньги – PearlSend',
-      'title.thanks': 'Заявка получена – PearlSend',
+      'title.home': 'MefraPay – Денежные переводы Россия ⇄ Уганда',
+      'title.send': 'Отправить деньги – MefraPay',
+      'title.thanks': 'Заявка получена – MefraPay',
 
       'nav.home': 'Главная',
       'nav.send': 'Отправить деньги',

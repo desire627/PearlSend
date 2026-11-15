@@ -1,8 +1,8 @@
 /**
- * PearlSend – save every transfer request into a Google Sheet (backup copy).
+ * MefraPay – save every transfer request into a Google Sheet (backup copy).
  *
  * SETUP (about 5 minutes, one time):
- *  1. Create a new Google Sheet (sheets.new). Name it e.g. "PearlSend requests".
+ *  1. Create a new Google Sheet (sheets.new). Name it e.g. "MefraPay requests".
  *  2. In the sheet: Extensions → Apps Script.
  *  3. Delete what's there, paste this whole file, click Save (💾).
  *  4. Click Deploy → New deployment → gear icon → "Web app".

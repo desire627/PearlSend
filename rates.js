@@ -1,5 +1,5 @@
 /* =====================================================================
-   PearlSend – exchange rates and conversion (RUB ⇄ UGX)
+   MefraPay – exchange rates and conversion (RUB ⇄ UGX)
    ---------------------------------------------------------------------
    YOUR SETTINGS – change these numbers to match your business:
    ===================================================================== */
