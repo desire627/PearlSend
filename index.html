@@ -51,6 +51,60 @@
       </div>
     </section>
 
+    <section class="converter-band" id="converter">
+      <div class="container">
+        <div class="conv-head">
+          <span class="eyebrow" data-i18n="conv.eyebrow">Converter</span>
+          <h2 data-i18n="conv.title">How much will they receive?</h2>
+          <p data-i18n="conv.lead">Type how much you want to send, or how much the other person should get. We work out the rest using the latest exchange rate.</p>
+        </div>
+
+        <div class="cx-card">
+          <div class="cx-row">
+            <div class="cx-panel">
+              <div class="cx-top">
+                <label for="c-send" data-i18n="conv.send">You send</label>
+                <span class="cx-cur">
+                  <img id="c-send-flag" src="images/flag-ru.svg" alt="" class="round-flag">
+                  <span><b id="c-send-cur">RUB</b><small id="c-send-name">Russian rouble</small></span>
+                </span>
+              </div>
+              <input type="text" id="c-send" class="cx-input" inputmode="decimal" autocomplete="off">
+            </div>
+
+            <button type="button" id="c-swap" class="cx-swap" aria-label="Swap direction">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v14m0 0l-3-3m3 3l3-3M17 20V6m0 0l-3 3m3-3l3 3"/></svg>
+            </button>
+
+            <div class="cx-panel receive">
+              <div class="cx-top">
+                <label for="c-recv" data-i18n="conv.receive">They receive</label>
+                <span class="cx-cur">
+                  <img id="c-recv-flag" src="images/flag-ug.svg" alt="" class="round-flag">
+                  <span><b id="c-recv-cur">UGX</b><small id="c-recv-name">Ugandan shilling</small></span>
+                </span>
+              </div>
+              <input type="text" id="c-recv" class="cx-input" inputmode="decimal" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="cx-bar">
+            <span class="cx-live"><i class="dot" id="c-dot"></i><span id="c-status" data-i18n="conv.live">Live rate</span></span>
+            <b id="c-rate">…</b>
+            <span id="c-fee-row" hidden>· <span data-i18n="conv.fee">Our fee</span> <b id="c-fee"></b></span>
+            <span class="cx-updated" id="c-updated"></span>
+          </div>
+
+          <div class="cx-chips" id="c-chips" aria-label="Quick amounts"></div>
+
+          <div class="cx-foot">
+            <p data-i18n="conv.note">Estimate only. The final amount is confirmed when we contact you.</p>
+            <a href="send.html" id="c-cta" class="btn btn-accent" data-i18n="conv.cta">Send this amount →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="how" id="how">
       <div class="container how-grid">
 
@@ -111,7 +165,7 @@
                 <div class="pn-icon"><img src="images/logo.svg" alt=""></div>
                 <div>
                   <b data-i18n="notify.title">Money received</b>
-                  <span data-i18n="notify.text">You have received UGX 900,000</span>
+                  <span data-i18n="notify.text">You have received UGX 1,000,000</span>
                 </div>
                 <time data-i18n="notify.time">now</time>
               </div>
@@ -150,6 +204,98 @@
   </footer>
 
   <script src="i18n.js"></script>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="rates.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ---------- Converter ----------
+    (function () {
+      const $ = id => document.getElementById(id);
+      const sendIn = $('c-send'), recvIn = $('c-recv');
+      const PRESETS = { RUB: [5000, 10000, 20000, 50000], UGX: [250000, 500000, 1000000, 2500000] };
+      let dir = 'to';            // 'to' = Russia → Uganda, 'from' = Uganda → Russia
+      let lastEdited = 'send';
+
+      const curs = () => dir === 'to'
+        ? { from: 'RUB', to: 'UGX', fFlag: 'flag-ru', tFlag: 'flag-ug' }
+        : { from: 'UGX', to: 'RUB', fFlag: 'flag-ug', tFlag: 'flag-ru' };
+
+      const loc = () => (I18N.lang === 'ru' ? 'ru-RU' : 'en-US');
+      const num = (n, cur) => isFinite(n) && n > 0
+        ? n.toLocaleString(loc(), { maximumFractionDigits: cur === 'UGX' ? 0 : 2 }) : '';
+      const short = n => n.toLocaleString(loc(), { notation: 'compact', maximumFractionDigits: 1 });
+
+      function renderChips() {
+        const c = curs();
+        const current = Rates.parse(sendIn.value);
+        $('c-chips').innerHTML = '';
+        PRESETS[c.from].forEach(v => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'chip' + (v === current ? ' on' : '');
+          b.textContent = short(v) + ' ' + c.from;
+          b.addEventListener('click', () => { sendIn.value = num(v, c.from); lastEdited = 'send'; update(); });
+          $('c-chips').appendChild(b);
+        });
+      }
+
+      function update() {
+        const c = curs();
+        $('c-send-cur').textContent = c.from;
+        $('c-recv-cur').textContent = c.to;
+        $('c-send-name').textContent = I18N.t('cur.' + c.from);
+        $('c-recv-name').textContent = I18N.t('cur.' + c.to);
+        $('c-send-flag').src = 'images/' + c.fFlag + '.svg';
+        $('c-recv-flag').src = 'images/' + c.tFlag + '.svg';
+
+        let send;
+        if (lastEdited === 'send') {
+          send = Rates.parse(sendIn.value);
+          recvIn.value = num(Rates.receiveFor(send, c.from, c.to), c.to);
+        } else {
+          send = Rates.sendFor(Rates.parse(recvIn.value), c.from, c.to);
+          sendIn.value = num(send, c.from);
+        }
+
+        $('c-rate').textContent = Rates.rateText(c.from, c.to);
+        const feePct = Rates.config.FEE_PERCENT;
+        $('c-fee-row').hidden = !feePct;
+        if (feePct) $('c-fee').textContent = Rates.format(Rates.feeFor(send), c.from) + ' (' + feePct + '%)';
+
+        const i = Rates.info;
+        $('c-dot').classList.toggle('off', !i.live);
+        $('c-status').textContent = I18N.t(i.live ? (i.manual ? 'conv.ours' : 'conv.live') : 'conv.offline');
+        $('c-updated').textContent = i.updated && !i.manual
+          ? I18N.t('conv.updated') + ' ' + i.updated.toLocaleDateString(loc(), { day: 'numeric', month: 'short' })
+          : '';
+
+        const amt = Math.round(send * 100) / 100;
+        $('c-cta').href = 'send.html?dir=' + dir + (amt > 0 ? '&amount=' + amt + '&cur=' + c.from : '');
+        renderChips();
+      }
+
+      sendIn.addEventListener('input', () => { lastEdited = 'send'; update(); });
+      recvIn.addEventListener('input', () => { lastEdited = 'recv'; update(); });
+
+      // Swap: flip direction, the amount they would receive becomes what is sent back
+      $('c-swap').addEventListener('click', () => {
+        dir = dir === 'to' ? 'from' : 'to';
+        $('c-swap').classList.toggle('flipped');
+        sendIn.value = num(dir === 'to' ? 20000 : 1000000, curs().from);
+        lastEdited = 'send';
+        update();
+      });
+
+      document.addEventListener('ratesready', update);
+      document.addEventListener('langchange', () => {
+        if (lastEdited === 'send') sendIn.value = num(Rates.parse(sendIn.value), curs().from);
+        else recvIn.value = num(Rates.parse(recvIn.value), curs().to);
+        update();
+      });
+
+      sendIn.value = num(20000, 'RUB');
+      update();
+    })();
+  </script>
 </body>
 </html>

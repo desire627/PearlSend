@@ -91,6 +91,13 @@
                   <select id="payout" name="Payout method" required></select>
                 </div>
               </div>
+              <div class="estimate" id="estimate" aria-live="polite" hidden>
+                <span id="est-label"></span>
+                <strong id="est-value"></strong>
+                <small id="est-rate"></small>
+              </div>
+              <input type="hidden" name="Estimated recipient amount" id="est-field">
+              <input type="hidden" name="Exchange rate used" id="rate-field">
             </fieldset>
 
             <fieldset>
@@ -162,6 +169,7 @@
             <dl class="ok-summary">
               <div><dt data-i18n="ok.route">Route</dt><dd id="ok-route"></dd></div>
               <div><dt data-i18n="pf.amount">Amount</dt><dd id="ok-amount"></dd></div>
+              <div id="ok-est-row"><dt data-i18n="conv.receive">They receive</dt><dd id="ok-est"></dd></div>
               <div><dt data-i18n="pf.recipient">Recipient</dt><dd id="ok-recipient"></dd></div>
               <div><dt data-i18n="pf.phone">Phone</dt><dd id="ok-phone"></dd></div>
               <div><dt data-i18n="f.payout">Recipient receives via</dt><dd id="ok-payout"></dd></div>
@@ -196,6 +204,7 @@
   </footer>
 
   <script src="i18n.js"></script>
+  <script src="rates.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -242,7 +251,52 @@
       if (dir !== lastDir) currency.value = toUganda ? 'RUB' : 'UGX';
       fillPayout(dir);
       lastDir = dir;
+      updateEstimate();
     }
+
+    // ---------- Live estimate: how much the other party receives ----------
+    const enNum = (n, cur) => n.toLocaleString('en-US', { maximumFractionDigits: cur === 'UGX' ? 0 : 2 }) + ' ' + cur;
+
+    function estimateParts() {
+      const amt = Number(document.getElementById('amount').value);
+      const sendCur = dirTo.checked ? 'RUB' : 'UGX';
+      const recvCur = dirTo.checked ? 'UGX' : 'RUB';
+      if (!(amt > 0)) return null;
+      const paysInSendCur = currency.value === sendCur;
+      return {
+        amt, sendCur, recvCur, paysInSendCur,
+        receive: paysInSendCur ? Rates.receiveFor(amt, sendCur, recvCur) : amt,
+        pay: paysInSendCur ? amt : Rates.sendFor(amt, sendCur, recvCur)
+      };
+    }
+
+    function updateEstimate() {
+      const box = document.getElementById('estimate');
+      const p = estimateParts();
+      const estField = document.getElementById('est-field');
+      const rateField = document.getElementById('rate-field');
+      if (!p) { box.hidden = true; estField.value = ''; return; }
+
+      // Shown to the visitor (in their language)
+      document.getElementById('est-label').textContent = t(p.paysInSendCur ? 'est.gets' : 'est.pay');
+      document.getElementById('est-value').textContent = '≈ ' + (p.paysInSendCur
+        ? Rates.format(p.receive, p.recvCur) : Rates.format(p.pay, p.sendCur));
+      const fee = Rates.config.FEE_PERCENT;
+      document.getElementById('est-rate').textContent = Rates.rateText(p.sendCur, p.recvCur) +
+        (fee ? ' · ' + t('conv.fee') + ' ' + fee + '%' : '') +
+        (Rates.info.live ? '' : ' · ' + t('conv.offline'));
+      box.hidden = false;
+
+      // Sent to you in the email (always English)
+      estField.value = 'Sender pays ≈ ' + enNum(p.pay, p.sendCur) + ', recipient gets ≈ ' + enNum(p.receive, p.recvCur);
+      rateField.value = '1 RUB = ' + Rates.rate('RUB', 'UGX').toFixed(2) + ' UGX' +
+        (fee ? ', fee ' + fee + '%' : '') +
+        (Rates.info.manual ? ' (your fixed rate)' : Rates.info.live ? ' (live rate)' : ' (fallback rate – check!)');
+    }
+
+    document.getElementById('amount').addEventListener('input', updateEstimate);
+    currency.addEventListener('change', updateEstimate);
+    document.addEventListener('ratesready', updateEstimate);
 
     dirTo.addEventListener('change', applyDirection);
     dirFrom.addEventListener('change', applyDirection);
@@ -278,9 +332,11 @@
       document.getElementById('reference').value = ref;
       document.getElementById('subject').value =
         '💸 ' + money + ' to ' + val('r-name') + ' (' + route + ') · ' + ref;
+      const p = estimateParts();
       document.getElementById('summary').value =
         val('s-name') + ' wants to send ' + money + ' to ' + val('r-name') +
-        ' (' + val('r-phone') + ') via ' + payout.value + '. Route: ' + route + '.';
+        ' (' + val('r-phone') + ') via ' + payout.value + '. Route: ' + route + '.' +
+        (p ? ' Recipient gets ≈ ' + enNum(p.receive, p.recvCur) + '.' : '');
       document.getElementById('submitted').value = new Date().toLocaleString('en-GB', {
         dateStyle: 'medium', timeStyle: 'short'
       });
@@ -300,6 +356,8 @@
         t(r.dir === 'to' ? 'route.to' : 'route.from') +
         ' <img src="images/' + flags[1] + '.svg" alt="" class="flag">';
       document.getElementById('ok-amount').textContent = r.money;
+      document.getElementById('ok-est-row').hidden = !r.est;
+      if (r.est) document.getElementById('ok-est').textContent = '≈ ' + Rates.format(r.est.receive, r.est.recvCur);
       document.getElementById('ok-recipient').textContent = r.recipient;
       document.getElementById('ok-phone').textContent = r.phone;
       document.getElementById('ok-payout').textContent = t(r.payoutKey);
@@ -310,7 +368,7 @@
     function showSuccess(ref, money) {
       const dir = dirTo.checked ? 'to' : 'from';
       lastRequest = {
-        ref, money, dir,
+        ref, money, dir, est: estimateParts(),
         sender: val('s-name'), recipient: val('r-name'), phone: val('r-phone'),
         payoutKey: PAYOUTS[dir].find(([v]) => v === payout.value)[1]
       };
@@ -377,8 +435,14 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    if (new URLSearchParams(location.search).get('dir') === 'from') dirFrom.checked = true;
+    const params = new URLSearchParams(location.search);
+    if (params.get('dir') === 'from') dirFrom.checked = true;
     applyDirection();
+
+    // Prefill from the home-page converter ("Send this amount →")
+    if (Number(params.get('amount')) > 0) document.getElementById('amount').value = params.get('amount');
+    if (['RUB', 'UGX'].includes(params.get('cur'))) currency.value = params.get('cur');
+    updateEstimate();
   </script>
 </body>
 </html>

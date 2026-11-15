@@ -40,7 +40,7 @@
     <rect width="110" height="190" rx="18" fill="#1d2433"/>
     <rect x="8" y="14" width="94" height="162" rx="10" fill="#ffffff"/>
     <use href="#ug" x="37" y="28" width="36" height="24"/>
-    <text x="55" y="92" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="800" font-size="14" fill="#0f7b4a">UGX 900,000</text>
+    <text x="55" y="92" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="800" font-size="12" fill="#0f7b4a">UGX 1,000,000</text>
     <circle cx="55" cy="139" r="20" fill="#e8f4ee"/>
     <path d="M45 139 l7 7 l13 -14" fill="none" stroke="#0f7b4a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
