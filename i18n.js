@@ -43,7 +43,7 @@
       's3.title': 'Money is delivered',
       's3.text': 'The recipient gets the money on Mobile Money in Uganda, or on a bank card in Russia.',
       'notify.title': 'Money received',
-      'notify.text': "You have received UGX 450,000",
+      'notify.text': "You have received UGX 440,000",
       'notify.time': 'now',
 
       'dir.to.title': 'Sending to Uganda?',
@@ -133,6 +133,7 @@
       'conv.cta': 'Send this amount →',
       'conv.live': 'Live rate',
       'conv.ours': "Our rate",
+      'conv.switch': 'Switch direction',
       'conv.updated': 'Updated',
       'cur.RUB': 'Russian rouble',
       'cur.UGX': 'Ugandan shilling',
@@ -181,7 +182,7 @@
       's3.title': 'Деньги доставлены',
       's3.text': 'Получатель получает деньги на Mobile Money в Уганде или на банковскую карту в России.',
       'notify.title': 'Деньги получены',
-      'notify.text': "Вам зачислено 450 000 UGX",
+      'notify.text': "Вам зачислено 440 000 UGX",
       'notify.time': 'сейчас',
 
       'dir.to.title': 'Отправляете в Уганду?',
@@ -271,6 +272,7 @@
       'conv.cta': 'Отправить эту сумму →',
       'conv.live': 'Актуальный курс',
       'conv.ours': "Наш курс",
+      'conv.switch': 'Сменить направление',
       'conv.updated': 'Обновлено',
       'cur.RUB': 'Российский рубль',
       'cur.UGX': 'Угандийский шиллинг',

@@ -338,7 +338,7 @@
 
       // Sent to you in the email (always English)
       estField.value = 'Sender pays ≈ ' + enNum(p.pay, p.sendCur) + ', recipient gets ≈ ' + enNum(p.receive, p.recvCur);
-      rateField.value = '1 RUB = ' + Rates.rate('RUB', 'UGX').toFixed(2) + ' UGX' +
+      rateField.value = Rates.rateText(p.sendCur, p.recvCur, 'en-US') +
         (fee ? ', fee ' + fee + '%' : '') +
         (Rates.info.manual ? ' (your fixed rate)' : Rates.info.live ? ' (live rate)' : ' (fallback rate – check!)');
     }

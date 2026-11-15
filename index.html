@@ -60,6 +60,13 @@
         </div>
 
         <div class="cx-card">
+          <div class="cx-route">
+            <div class="cx-route-text" id="c-route" aria-live="polite"></div>
+            <button type="button" id="c-switch" class="cx-switch">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h14m0 0-4-4m4 4-4 4M20 16H6m0 0 4-4m-4 4 4 4"/></svg>
+              <span data-i18n="conv.switch">Switch direction</span>
+            </button>
+          </div>
           <div class="cx-row">
             <div class="cx-panel">
               <div class="cx-top">
@@ -72,7 +79,7 @@
               <input type="text" id="c-send" class="cx-input" inputmode="decimal" autocomplete="off">
             </div>
 
-            <button type="button" id="c-swap" class="cx-swap" aria-label="Swap direction">
+            <button type="button" id="c-swap" class="cx-swap hint" aria-label="Switch direction" title="Switch direction">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v14m0 0l-3-3m3 3l3-3M17 20V6m0 0l-3 3m3-3l3 3"/></svg>
             </button>
 
@@ -166,7 +173,7 @@
                 <div class="pn-icon"><img src="images/logo.svg" alt=""></div>
                 <div>
                   <b data-i18n="notify.title">Money received</b>
-                  <span data-i18n="notify.text">You have received UGX 450,000</span>
+                  <span data-i18n="notify.text">You have received UGX 440,000</span>
                 </div>
                 <time data-i18n="notify.time">now</time>
               </div>
@@ -258,7 +265,7 @@
         const c = curs();
         const current = Rates.parse(sendIn.value);
         $('c-chips').innerHTML = '';
-        PRESETS[c.from].forEach(v => {
+        PRESETS[c.from].filter(v => v <= Rates.maxFor(c.from)).forEach(v => {
           const b = document.createElement('button');
           b.type = 'button';
           b.className = 'chip' + (v === current ? ' on' : '');
@@ -314,13 +321,32 @@
       recvIn.addEventListener('input', () => { lastEdited = 'recv'; update(); });
 
       // Swap: flip direction, the amount they would receive becomes what is sent back
-      $('c-swap').addEventListener('click', () => {
+      function swap() {
         dir = dir === 'to' ? 'from' : 'to';
+        $('c-swap').classList.remove('hint');
         $('c-swap').classList.toggle('flipped');
         sendIn.value = num(dir === 'to' ? 5000 : 250000, curs().from);
         lastEdited = 'send';
         update();
-      });
+      }
+      $('c-swap').addEventListener('click', swap);
+      $('c-switch').addEventListener('click', swap);
+
+      // Direction bar: "🇷🇺 Russia → Uganda 🇺🇬" + translated button labels
+      function renderRoute() {
+        const c = curs();
+        $('c-route').innerHTML =
+          '<img src="images/' + c.fFlag + '.svg" alt="" class="flag"> <b>' +
+          I18N.t(dir === 'to' ? 'route.to' : 'route.from') +
+          '</b> <img src="images/' + c.tFlag + '.svg" alt="" class="flag">';
+        const label = I18N.t('conv.switch');
+        $('c-swap').title = label;
+        $('c-swap').setAttribute('aria-label', label);
+      }
+      document.addEventListener('langchange', renderRoute);
+      $('c-swap').addEventListener('click', renderRoute);
+      $('c-switch').addEventListener('click', renderRoute);
+      renderRoute();
 
       document.addEventListener('ratesready', update);
       document.addEventListener('langchange', () => {

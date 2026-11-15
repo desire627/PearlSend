@@ -554,3 +554,33 @@ legend {
   background: #fff6dc; border-radius: 12px; padding: 12px 14px; margin-bottom: 16px;
   color: #6b4e00; font-size: .92rem; text-align: left;
 }
+
+/* ---------- Converter direction bar + swap hint ---------- */
+.cx-route {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.cx-route-text { display: inline-flex; align-items: center; gap: 8px; font-size: 1rem; }
+.cx-route-text .flag { width: 24px; height: 16px; }
+.cx-switch {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 600 .88rem var(--sans); color: var(--green-dark);
+  background: #e8f4ee; border: 1.5px solid #cfe5d9; border-radius: 999px;
+  padding: 7px 14px; cursor: pointer; transition: background .15s, border-color .15s;
+}
+.cx-switch:hover { background: #d9eee2; border-color: var(--green); }
+.cx-switch:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+.cx-switch svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* A gentle wiggle on load so people notice the round swap button */
+.cx-swap.hint { animation: swap-hint 1.2s ease-in-out 1.2s 2; }
+@keyframes swap-hint {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-20deg) scale(1.08); }
+  60% { transform: rotate(20deg) scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) { .cx-swap.hint { animation: none; } }
+@media (max-width: 560px) {
+  .cx-switch { flex: 1; justify-content: center; }
+  .cx-route-text { flex-basis: 100%; justify-content: center; }
+}

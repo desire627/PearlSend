@@ -1,0 +1,7 @@
+Setting,Value,Notes
+RUB to UGX,44,How many UGX the recipient gets for 1 RUB (Russia to Uganda)
+UGX to RUB,0.019082,How many RUB the recipient gets for 1 UGX (Uganda to Russia)
+Max RUB per transfer,10000,Largest amount a customer in Russia can send at once
+Max UGX per transfer,500000,Largest amount a customer in Uganda can send at once
+Fee %,0,Your fee in percent (0 = no fee)
+Updated,2026-11-15,Date you last changed the rates (shown on the website)

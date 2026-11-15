@@ -17,6 +17,7 @@ Visitors fill in a short form (amount, recipient name and phone, payout method, 
 | `styles.css` | All styles |
 | `images/` | Logo, flags and illustrations |
 | `google-sheet/Code.gs` | Optional Google Sheets backup (setup steps inside) |
+| `google-sheet/RATES-SETUP.md` | **How to change rates from a Google Sheet (no code)** |
 
 ## Run locally
 
