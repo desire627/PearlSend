@@ -478,7 +478,19 @@
         numRow.appendChild(copy);
         card.appendChild(numRow);
 
-        if (a.name) card.appendChild(el('div', 'pa-name', t('pay.holder') + ': ' + a.name));
+        // Highlighted name the customer must see in their bank / Mobile Money app before paying
+        if (a.name) {
+          const box = el('div', 'pa-name');
+          const icon = el('span', 'pa-name-icon', '✓');
+          icon.setAttribute('aria-hidden', 'true');
+          box.appendChild(icon);
+          const txt = el('div', 'pa-name-text');
+          txt.appendChild(el('small', '', t('pay.holder')));
+          txt.appendChild(el('strong', '', a.name));
+          txt.appendChild(el('span', 'pa-name-hint', t('pay.confirmName')));
+          box.appendChild(txt);
+          card.appendChild(box);
+        }
         list.appendChild(card);
       });
 
